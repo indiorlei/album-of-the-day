@@ -123,29 +123,33 @@ export async function GET(request: NextRequest) {
         normalizedArtist.includes(albumArtist);
 
       if (titleMatch && artistMatch) {
-        const spotifyImage = album.images?.[0]?.url
-        console.log('Spotify found:', { title: album.name, artist: album.artists[0]?.name, hasImage: !!spotifyImage })
-        
-        let finalImage = spotifyImage
+        const spotifyImage = album.images?.[0]?.url;
+        console.log("Spotify found:", {
+          title: album.name,
+          artist: album.artists[0]?.name,
+          hasImage: !!spotifyImage,
+        });
+
+        let finalImage = spotifyImage;
         if (!spotifyImage) {
-          console.log('No Spotify image, trying Discogs...')
-          finalImage = await getDiscogsCover(artist, title)
-          console.log('Discogs result:', !!finalImage)
+          console.log("No Spotify image, trying Discogs...");
+          finalImage = await getDiscogsCover(artist, title);
+          console.log("Discogs result:", !!finalImage);
         }
-        
+
         return NextResponse.json({
-          image: finalImage || '',
+          image: finalImage || "",
           spotifyUrl: album.external_urls?.spotify || "",
         });
       }
     }
 
-    console.log('No Spotify match found, trying Discogs only...')
+    console.log("No Spotify match found, trying Discogs only...");
     const discogsCover = await getDiscogsCover(artist, title);
-    console.log('Final Discogs result:', !!discogsCover)
-    
+    console.log("Final Discogs result:", !!discogsCover);
+
     return NextResponse.json({
-      image: discogsCover || '',
+      image: discogsCover || "",
       spotifyUrl: "",
     });
   } catch (error) {

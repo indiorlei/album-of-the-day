@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAlbum } from "@/hooks/useAlbum";
 import AlbumCard from "@/components/AlbumCard";
 import AlbumSkeleton from "@/components/AlbumSkeleton";
 
 export default function Home() {
+  const [mounted, setMounted] = useState(false);
   const {
     selectedAlbum,
     albumImage,
@@ -17,10 +18,11 @@ export default function Home() {
   } = useAlbum();
 
   useEffect(() => {
+    setMounted(true);
     drawRandomAlbum();
-  }, [drawRandomAlbum]);
+  }, []);
 
-  if (!selectedAlbum && loading) {
+  if (!mounted || (!selectedAlbum && loading)) {
     return (
       <main className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-4">
         <AlbumSkeleton />
