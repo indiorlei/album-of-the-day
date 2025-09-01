@@ -5,7 +5,7 @@ export interface Album {
   year: number;
 }
 
-export const albums: Album[] = [
+export const albums: readonly Album[] = [
   { position: 1, title: "Acabou Chorare", artist: "Novos Baianos", year: 1972 },
   {
     position: 2,
