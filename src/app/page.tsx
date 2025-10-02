@@ -20,11 +20,14 @@ export default function Home() {
   useEffect(() => {
     setMounted(true);
     drawRandomAlbum();
-  }, []);
+  }, [drawRandomAlbum]);
+
+  const mainClasses =
+    "min-h-dvh bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-4";
 
   if (!mounted || (!selectedAlbum && loading)) {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-4">
+      <main className={mainClasses}>
         <AlbumSkeleton />
       </main>
     );
@@ -32,7 +35,7 @@ export default function Home() {
 
   if (!selectedAlbum) {
     return (
-      <main className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center p-4">
+      <main className={mainClasses}>
         <div className="text-center">
           <p className="text-white mb-4">Erro ao carregar álbum</p>
           <button
@@ -47,7 +50,7 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex flex-col items-center justify-center p-4">
+    <main className="min-h-dvh bg-gradient-to-br from-gray-900 via-black to-gray-900 flex flex-col items-center justify-center p-4">
       <AlbumCard
         image={albumImage}
         title={selectedAlbum.title}
